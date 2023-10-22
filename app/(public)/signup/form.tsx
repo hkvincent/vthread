@@ -24,9 +24,7 @@ function Form() {
         setErrors([]);
 
         if (password != confirmPassword) {
-            const newErrors = [];
-            newErrors.push("Passwords do not match.");
-            setErrors(newErrors);
+            setErrors(prevErrors => [...prevErrors, "Passwords do not match."]);
             return;
         }
 
