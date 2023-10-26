@@ -1,4 +1,5 @@
 "use client";
+import { set } from "lodash";
 import { useRouter } from "next/navigation";
 import React, { FormEvent, useState } from "react";
 
@@ -6,6 +7,7 @@ function Form() {
     const router = useRouter();
     const [username, setUsername] = useState<undefined | string>("");
     const [password, setPassword] = useState<undefined | string>("");
+    const [error, setError] = useState<string>("");
 
     async function handleSubmit(e: FormEvent) {
         e.preventDefault();
@@ -16,7 +18,7 @@ function Form() {
         if (res.ok) {
             router.push("/feed");
         } else {
-            alert("log in failed");
+            setError("log in failed");
         }
     }
 
@@ -63,6 +65,13 @@ function Form() {
             >
                 Sign In
             </button>
+            {
+                error && (
+                    <div key={error} className="text-red-600 text-center">
+                        {error}
+                    </div>
+                )
+            }
         </form>
     );
 }
