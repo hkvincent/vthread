@@ -1,5 +1,6 @@
 "use client";
 import useSWR from "swr";
+import User from "../components/User";
 
 
 export default function Header() {
@@ -14,7 +15,7 @@ export default function Header() {
                 <h1 className="font-mono text-lg">V-thread</h1>
             </div>
             <div>
-                {/* <User user={data.data} href="account" /> */}
+                <User user={data.data} href="account" />
             </div>
         </header>
     );

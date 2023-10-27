@@ -1,6 +1,7 @@
+"use client";
+
 import { useState } from "react";
 import FeedList from "./FeedList";
-
 
 function FeedContainer() {
     const [cnt, setCnt] = useState(1);
