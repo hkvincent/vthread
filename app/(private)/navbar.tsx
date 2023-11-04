@@ -12,7 +12,7 @@ export default function NavBar() {
                         href="/feed"
                         className={
                             pathname.startsWith("/feed")
-                                ? "dark:text-green-400 text-green-800"
+                                ? "dark:text-green-400 text-green-400"
                                 : ""
                         }
                     >
