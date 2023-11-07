@@ -1,3 +1,4 @@
+"use client";
 import { addPost } from "@/app/action/actions";
 import { FormEvent, useState } from "react";
 import { useFormState, useFormStatus } from "react-dom";

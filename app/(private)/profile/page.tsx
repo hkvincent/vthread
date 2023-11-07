@@ -1,21 +1,33 @@
-"use client";
 import useSWR from "swr";
 import Form from "./Form";
 import PostContainer from "@/app/components/PostContainer";
+import { getJWTPayload } from "@/app/utils/auth";
+import { sql } from "@/db";
 
-export default function Profile() {
-    const { data, error, isLoading } = useSWR("/api/users/profile");
+export default async function Profile() {
 
-    if (error) return <div>failed to load</div>;
-    if (isLoading) return <div>loading...</div>;
+    async function getPorfile() {
+        // get currently logged in user
+        const jwtPayload = await getJWTPayload();
 
-    console.log(data);
+        // fetch user data
+        return await (await sql(
+            "select id, username, avatar from users where id = $1",
+            [jwtPayload.sub]
+        )).rows[0];;
+    }
+    // const { data, error, isLoading } = useSWR("/api/users/profile");
+
+    // if (error) return <div>failed to load</div>;
+    // if (isLoading) return <div>loading...</div>;
+
+    const user = await getPorfile();
 
     return (
         <main>
             <h2>Profile</h2>
             <Form />
-            <PostContainer username={data.data.username} showEditBtn={true} />
+            <PostContainer username={user.username} showEditBtn={true} />
         </main>
     );
 }
