@@ -19,3 +19,48 @@ export async function addPost(prevState: any, formData: FormData) {
     );
     return revalidatePath('/profile');
 }
+
+export async function deletePost(prevState: any, formData: FormData) {
+    // const jwtPayload = await getJWTPayload();
+    // const res = await sql(
+    //     "delete from posts where user_id = $1 and id = $2",
+    //     [jwtPayload.sub, postId]
+    // );
+    return revalidatePath('/profile');
+}
+
+export async function doFollow(prevState: any, formData: FormData) {
+    console.log({ formData });
+    const jwtPayload = await getJWTPayload();
+    const userId = formData.get('userId');
+
+    const res = await sql(
+        "select * from follows where user_id = $1 and follower_id = $2",
+        [userId, jwtPayload.sub]
+    );
+
+    if (res.rowCount > 0) {
+        revalidatePath('/');
+        return { message: 'already following' };
+    }
+
+    await sql("insert into follows (user_id, follower_id) values ($1, $2)", [
+        userId,
+        jwtPayload.sub,
+    ]);
+    revalidatePath('/')
+    return { message: ' follow' };;
+}
+
+export async function doUnfollow(prevState: any, formData: FormData) {
+    console.log({ formData });
+    const jwtPayload = await getJWTPayload();
+    const userId = formData.get('userId');
+
+    await sql("delete from follows where user_id = $1 and follower_id = $2", [
+        userId,
+        jwtPayload.sub,
+    ]);
+    revalidatePath('/')
+    return { message: ' remove follow' };;
+}

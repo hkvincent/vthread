@@ -1,68 +1,40 @@
-"use client";
+import { getJWTPayload } from "@/app/utils/auth";
+import { sql } from "@/db";
+import { get } from "lodash";
 import { notFound } from "next/navigation";
 import useSWR, { mutate } from "swr";
+import FollowButton from "./FollowButton";
 
-export default function UserPageHeader({ username }: { username: string }) {
-    const {
-        data: dataUser,
-        error: errorUser,
-        isLoading: isLoadingUser,
-    } = useSWR("/api/users?username=" + username);
-    const {
-        data: dataFollow,
-        error: errorFollow,
-        isLoading: isLoadingFollow,
-    } = useSWR(() => "/api/follows?user_id=" + dataUser.data[0].id);
+export default async function UserPageHeader({ username }: { username: string }) {
 
-    if (errorFollow || errorUser) return <div>failed to load</div>;
-    if (isLoadingFollow || isLoadingUser) return <div>loading...</div>;
+    async function getUser(username: string) {
+        const statement =
+            "select id, username, avatar from users where username ilike $1";
+        const values = [username];
+        return (await sql(statement, values)).rows[0];
+    }
 
-    console.log(dataUser, dataFollow);
+    async function getFollow(dataUser: any) {
+        if (dataUser === undefined) return;
+        const jwtPayload = await getJWTPayload();
+        console.log({ dataUser });
+        const res = await sql(
+            "select * from follows where user_id = $1 and follower_id = $2",
+            [dataUser.id, jwtPayload.sub]
+        );
+        return res.rows[0]
+    }
+    const dataUser = await getUser(username);
+    const dataFollow = await getFollow(dataUser);
 
-    if (dataUser.data.length == 0) {
+    if (dataUser === undefined) {
         notFound();
-    }
-
-    const user = dataUser.data[0];
-
-    async function handleUnfollow() {
-        const res = await fetch("/api/follows/" + user.id, {
-            method: "DELETE",
-        });
-        if (res.ok) {
-            mutate("/api/follows?user_id=" + user.id);
-        }
-    }
-
-    async function handleFollow() {
-        const res = await fetch("/api/follows", {
-            method: "POST",
-            body: JSON.stringify({ user_id: user.id }),
-        });
-        if (res.ok) {
-            mutate("/api/follows?user_id=" + user.id);
-        }
     }
 
     return (
         <header className="w-full dark:bg-slate-800 bg-slate-300 p-2 rounded-lg flex flex-row justify-between">
             <h1 className="text-lg font-bold">{username}</h1>
-            {dataFollow.data.length > 0 && (
-                <button
-                    onClick={handleUnfollow}
-                    className="dark:bg-slate-900 bg-slate-400 p-2 rounded-lg"
-                >
-                    Unfollow
-                </button>
-            )}
-            {dataFollow.data.length == 0 && (
-                <button
-                    onClick={handleFollow}
-                    className="dark:bg-slate-900 bg-slate-400 p-2 rounded-lg"
-                >
-                    Follow
-                </button>
-            )}
+            <FollowButton follow={dataFollow != null && dataFollow != undefined} willFollow={dataUser.id} />
         </header>
     );
 }
