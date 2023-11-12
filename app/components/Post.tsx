@@ -1,5 +1,5 @@
-import Image from "next/image";
 import Link from "next/link";
+import MyImage from "./MyImage";
 
 function Post({ post, showEditBtn }: { post: PostI; showEditBtn?: boolean }) {
     const options: Intl.DateTimeFormatOptions = {
@@ -16,13 +16,7 @@ function Post({ post, showEditBtn }: { post: PostI; showEditBtn?: boolean }) {
             <div>
                 {post.avatar && (
                     <Link href={`/${post.username}`}>
-                        <Image
-                            src={post.avatar}
-                            width={50}
-                            height={50}
-                            alt={post.username}
-                            className="rounded-full mr-3"
-                        />
+                        <MyImage url={post.avatar} />
                     </Link>
                 )}
                 {!post.avatar && (

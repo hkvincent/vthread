@@ -12,6 +12,7 @@ export async function GET(request: Request) {
         [jwtPayload.sub]
     );
     const user = res.rows[0];
+    console.log({ user });
     // return user data
     return NextResponse.json({ data: user });
 }

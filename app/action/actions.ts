@@ -30,7 +30,7 @@ export async function deletePost(prevState: any, formData: FormData) {
 }
 
 export async function doFollow(prevState: any, formData: FormData) {
-    console.log({ formData });
+    console.log("doFollow");
     const jwtPayload = await getJWTPayload();
     const userId = formData.get('userId');
 
@@ -53,7 +53,7 @@ export async function doFollow(prevState: any, formData: FormData) {
 }
 
 export async function doUnfollow(prevState: any, formData: FormData) {
-    console.log({ formData });
+    console.log("doUnfollow");
     const jwtPayload = await getJWTPayload();
     const userId = formData.get('userId');
 

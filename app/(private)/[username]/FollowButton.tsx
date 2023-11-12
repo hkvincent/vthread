@@ -27,9 +27,8 @@ const FollowButton = ({ follow, willFollow }: { follow: boolean, willFollow: str
     //     }
     // }
 
-    console.log({ follow });
+    console.log({ follow, willFollow });
     const willFormAction = follow ? doUnfollow : doFollow;
-    willFormAction.bind(null, willFollow);
     const [state, formAction] = useFormState(willFormAction, initialState);
     return (
         <form action={formAction}>
