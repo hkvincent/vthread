@@ -5,7 +5,7 @@ import Footer from "./footer";
 import Header from "./header";
 import NavBar from "./navbar";
 import fetcher from "../utils/fetcher";
-import SearchBar from "./search-bar";
+import SearchBar from "./SearchBar";
 
 export default function PrivateLayout({
     children,

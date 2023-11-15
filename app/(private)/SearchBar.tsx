@@ -1,5 +1,6 @@
 import * as _ from "lodash";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
+import User from "../components/User";
 // import User from "../components/user";
 
 export default function SearchBar() {
@@ -55,12 +56,12 @@ export default function SearchBar() {
                 onChange={handleChange}
                 onClick={handleClick}
                 type="text"
-                className="p-2 rounded-lg dark:bg-slate-600 dark:text-white bg-white text-black my-2 max-w-xs"
+                className="p-2 rounded-md shadow-md bg-gray-100 text-black my-2 max-w-xs transition duration-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 placeholder="Search"
             />
             {visible && searchResults.length > 0 && (
-                <ul className="flex flex-col bg-white text-black absolute p-2 rounded-lg top-14 w-full max-w-sm right-2">
-                    {/* {searchResults.map((res: UserI) => {
+                <ul className="flex flex-col bg-gray-200 text-black absolute shadow-lg rounded-lg mt-1 p-2 top-14 w-full max-w-sm right-2"                >
+                    {searchResults.map((res: UserI) => {
                         return (
                             <li
                                 key={res.id}
@@ -70,7 +71,7 @@ export default function SearchBar() {
                                 <User user={res} />
                             </li>
                         );
-                    })} */}
+                    })}
                 </ul>
             )}
         </div>
