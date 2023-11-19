@@ -21,6 +21,7 @@ function PostContainer({
                 username={username}
                 key={i}
                 showEditBtn={showEditBtn}
+                numberOfPosts={numberOfPosts}
             />
         );
     }

@@ -41,7 +41,7 @@ export default async function Profile() {
         <main>
             <h2>Profile</h2>
             <Form />
-            <PostContainer username={user.username} showEditBtn={true} numberOfPosts={total} />
+            <PostContainer username={user.username} showEditBtn={true} numberOfPosts={total.count} />
         </main>
     );
 }
