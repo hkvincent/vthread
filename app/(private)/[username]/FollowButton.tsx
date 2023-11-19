@@ -26,8 +26,6 @@ const FollowButton = ({ follow, willFollow }: { follow: boolean, willFollow: str
     //         mutate("/api/follows?user_id=" + user.id);
     //     }
     // }
-
-    console.log({ follow, willFollow });
     const willFormAction = follow ? doUnfollow : doFollow;
     const [state, formAction] = useFormState(willFormAction, initialState);
     return (
@@ -41,7 +39,6 @@ const FollowButton = ({ follow, willFollow }: { follow: boolean, willFollow: str
 function SubmitButton({ follow }: { follow: boolean }) {
     const { pending } = useFormStatus()
 
-    console.log({ pending });
     return (
         <button
             className="dark:bg-slate-900 bg-slate-400 p-2 rounded-lg"

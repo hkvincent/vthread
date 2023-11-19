@@ -7,7 +7,6 @@ function MyImage({ url }: { url: string }) {
     const [imageError, setImageError] = useState(false);
 
     const handleImageError = () => {
-        console.log("image error");
         setImageError(true);
     };
 

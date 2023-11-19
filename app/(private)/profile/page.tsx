@@ -16,18 +16,32 @@ export default async function Profile() {
             [jwtPayload.sub]
         )).rows[0];;
     }
+
+
+    async function getTotalProfile() {
+        // get currently logged in user
+        const jwtPayload = await getJWTPayload();
+
+        // fetch user data
+        return await (await sql(
+            "select count(*) from posts where user_id = $1",
+            [jwtPayload.sub]
+        )).rows[0];;
+    }
     // const { data, error, isLoading } = useSWR("/api/users/profile");
 
     // if (error) return <div>failed to load</div>;
     // if (isLoading) return <div>loading...</div>;
 
     const user = await getPorfile();
+    const total = await getTotalProfile();
+    console.log({ total });
 
     return (
         <main>
             <h2>Profile</h2>
             <Form />
-            <PostContainer username={user.username} showEditBtn={true} />
+            <PostContainer username={user.username} showEditBtn={true} numberOfPosts={total} />
         </main>
     );
 }

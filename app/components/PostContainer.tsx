@@ -5,9 +5,11 @@ import PostList from "./PostList";
 function PostContainer({
     username,
     showEditBtn,
+    numberOfPosts,
 }: {
     username: string;
     showEditBtn?: boolean;
+    numberOfPosts?: number;
 }) {
     const [cnt, setCnt] = useState(1);
 

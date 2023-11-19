@@ -11,6 +11,7 @@ export async function GET(
         params.id,
         jwtPayload.sub,
     ]);
+    
     if (res.rowCount == 0) {
         return NextResponse.json({ error: "not found" }, { status: 404 });
     }

@@ -4,20 +4,32 @@ import { revalidatePath } from "next/cache";
 import { getJWTPayload } from "../utils/auth";
 import { sql } from "@/db";
 
-export async function editPost(formData: FormData) {
-
+export async function editPost(id: number, prevState: any, formData: FormData) {
+    const jwtPayload = await getJWTPayload();
+    const res = await sql(
+        "select * from posts where user_id = $1 and id = $2",
+        [jwtPayload.sub, id]
+    );
+    if (res.rowCount == 0) {
+        return { message: 'not found' };
+    }
+    await sql(
+        "update posts set content = $1 where user_id = $2 and id = $3",
+        [formData.get('post'), jwtPayload.sub, id]
+    );
+    revalidatePath('/profile');
+    return { message: 'update' };
 
 }
 
 export async function addPost(prevState: any, formData: FormData) {
     const jwtPayload = await getJWTPayload();
-    console.log({ formData });
-    console.log(formData.get('post'));
     const res = await sql(
         "insert into posts (user_id, content) values ($1, $2) returning *",
         [jwtPayload.sub, formData.get('post')]
     );
-    return revalidatePath('/profile');
+    revalidatePath('/profile');
+    return { message: 'add' };
 }
 
 export async function deletePost(prevState: any, formData: FormData) {

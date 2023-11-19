@@ -29,7 +29,6 @@ export default function SearchBar() {
         const res = await fetch("/api/search?q=" + searchText);
         if (res.ok) {
             const json = await res.json();
-            console.log(json);
             setVisible(true);
             setSearchResults(json.data);
         } else {
@@ -39,7 +38,6 @@ export default function SearchBar() {
     }
 
     function handleChange(e: ChangeEvent<HTMLInputElement>) {
-        console.log("change", e.target.value);
         debouncedFetchSearchResults(e.target.value);
     }
 
