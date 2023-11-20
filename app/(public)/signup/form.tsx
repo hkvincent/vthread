@@ -11,7 +11,6 @@ function Form() {
 
     useEffect(() => {
         return () => {
-            console.log("cleanup");
             setPassword("");
             setConfirmPassword("");
             setErrors([]);

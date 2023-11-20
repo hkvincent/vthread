@@ -20,13 +20,10 @@ function PostList({
 
 
     // async useEffect to fetch data from api and set it to post state.
-
-
     useEffect(() => {
         async function fetchMyAPI() {
             const response = await fetch("/api/posts?page=" + index + "&username=" + username)
             const data = await response.json()
-            console.log({ data })
             setIsLoading(false);
             setPost(data.data)
         }

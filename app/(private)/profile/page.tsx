@@ -35,7 +35,6 @@ export default async function Profile() {
 
     const user = await getPorfile();
     const total = await getTotalProfile();
-    console.log({ total });
 
     return (
         <main>

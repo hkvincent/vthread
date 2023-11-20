@@ -5,7 +5,6 @@ import MyImage from "./MyImage";
 
 function User({ user, href }: { user: UserI; href?: string }) {
     console.log(`user.avatar: ${user.avatar}`);
-
     return (
         <div>
             <Link href={`/${href || user.username}`} className="flex flex-row items-center transition duration-300 ease-in-out hover:bg-gray-300 rounded-md p-2">
