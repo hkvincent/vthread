@@ -1,6 +1,7 @@
 import { getJWTPayload } from "@/app/utils/auth";
 import Form from "./form";
 import { sql } from "@/db";
+import DeleteBtn from "./DeleteBtn";
 // import DeleteBtn from "./delete-btn";
 
 export default async function EditPost({ params }: { params: { id: number } }) {
@@ -34,7 +35,7 @@ export default async function EditPost({ params }: { params: { id: number } }) {
             <h2>Edit Post</h2>
             <div className="flex flex-col gap-10">
                 <Form post={data} />
-                {/* <DeleteBtn post={data.data} /> */}
+                <DeleteBtn post={data} />
             </div>
         </div>
     );

@@ -1,6 +1,12 @@
 import Link from "next/link";
 import MyImage from "./MyImage";
-
+import { useFormState, useFormStatus } from "react-dom";
+import LoadingSVG from "./LoadingSVG";
+import { deletePost } from "../action/actions";
+import { useState } from "react";
+const initialState = {
+    message: null,
+}
 function Post({ post, showEditBtn }: { post: PostI; showEditBtn?: boolean }) {
     const options: Intl.DateTimeFormatOptions = {
         year: "numeric",
@@ -11,6 +17,17 @@ function Post({ post, showEditBtn }: { post: PostI; showEditBtn?: boolean }) {
     };
 
     const createdAt = new Date(post.created_at);
+    const [state, setState] = useState({ showConfirm: false });
+    const updateUserWithId = deletePost.bind(null, post.id);
+    const [formState, formAction] = useFormState(updateUserWithId, initialState);
+
+    function handleClick() {
+        // const newState = Object.assign({}, state, {
+        //   showConfirm: !state.showConfirm,
+        // });
+        setState({ ...state, showConfirm: !state.showConfirm });
+    }
+
     return (
         <div className="flex flex-row">
             <div>
@@ -36,17 +53,52 @@ function Post({ post, showEditBtn }: { post: PostI; showEditBtn?: boolean }) {
                 <div>{post.content}</div>
             </div>
             {showEditBtn && (
-                <div className="text-right flex-grow">
-                    <Link
-                        href={`/profile/edit-post/${post.id}`}
-                        className="dark:text-green-400 text-green-800"
-                    >
-                        Edit
-                    </Link>
+                <div className="flex flex-col justify-start items-end flex-grow">
+                    <button className="dark:bg-slate-900 bg-blue-400 p-2 rounded-lg mb-1">
+                        <Link
+                            href={`/profile/edit-post/${post.id}`}
+                            className="dark:text-green-400 text-green-800"
+                        >
+                            Edit
+                        </Link>
+                    </button>
+
+                    {!state.showConfirm && (
+                        <button className="mt-1 dark:bg-slate-900 bg-red-400 p-2 rounded-lg" onClick={handleClick}>
+                            Delete
+                        </button>
+                    )}
+
+                    {state.showConfirm && (<form className="mt-1" action={formAction}>
+                        <div>
+                            <p>SURE?</p>
+                            <div className="flex flex-row gap-2">
+                                <SubmitButton />
+                                <button className="dark:bg-slate-900 bg-slate-400 p-2 rounded-lg" onClick={handleClick}>
+                                    No
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                    )}
                 </div>
             )}
         </div>
     );
+}
+
+
+function SubmitButton() {
+    const { pending } = useFormStatus()
+
+    return (
+        <button
+            type="submit"
+            className="dark:bg-slate-900 bg-red-400 p-2 rounded-lg" aria-disabled={pending} disabled={pending}
+        >
+            {pending ? <LoadingSVG /> : "Delete"}
+        </button>
+    )
 }
 
 export default Post;

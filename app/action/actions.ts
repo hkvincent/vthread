@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { getJWTPayload } from "../utils/auth";
 import { sql } from "@/db";
+import { redirect } from "next/navigation";
 
 export async function editPost(id: number, prevState: any, formData: FormData) {
     const jwtPayload = await getJWTPayload();
@@ -32,13 +33,19 @@ export async function addPost(prevState: any, formData: FormData) {
     return { message: 'add' };
 }
 
-export async function deletePost(prevState: any, formData: FormData) {
-    // const jwtPayload = await getJWTPayload();
-    // const res = await sql(
-    //     "delete from posts where user_id = $1 and id = $2",
-    //     [jwtPayload.sub, postId]
-    // );
-    return revalidatePath('/profile');
+export async function deletePost(id: number, prevState: any, formData: FormData) {
+    console.log(`deletePost ${id}`);
+    const jwtPayload = await getJWTPayload();
+    const res = await sql("delete from posts where user_id = $1 and id = $2", [
+        jwtPayload.sub,
+        id,
+    ]);
+    if (res.rowCount != 1) {
+        console.log(`fail to delete ${id}`);
+        return { message: '' };
+    }
+    revalidatePath('/profile');
+    redirect(`/profile`);
 }
 
 export async function doFollow(prevState: any, formData: FormData) {
