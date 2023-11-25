@@ -1,4 +1,4 @@
-import { getJWTPayload } from "@/app/util/auth";
+import { getJWTPayload } from "@/app/utils/auth";
 import { sql } from "@/db";
 import { NextResponse } from "next/server";
 
