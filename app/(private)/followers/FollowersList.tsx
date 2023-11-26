@@ -1,3 +1,4 @@
+import LoadingSVG from "@/app/components/LoadingSVG";
 import User from "@/app/components/User";
 import useSWR from "swr";
 
@@ -7,7 +8,7 @@ function FollowersList({ index }: { index: number }) {
         () => "/api/users/" + userData.data.id + "/followers?page=" + index
     );
 
-    if (!followerData) return <div>loading...</div>;
+    if (!followerData) return <div className="flex flex-row justify-center items-center mb-4"><LoadingSVG /></div>;
 
     return (
         <ul>

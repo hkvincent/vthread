@@ -1,11 +1,12 @@
 
 import useSWR from "swr";
 import Post from "@/app/components/Post";
+import LoadingSVG from "@/app/components/LoadingSVG";
 function FeedList({ index }: { index: number }) {
     const { data, error, isLoading } = useSWR("/api/posts/feed?page=" + index);
 
     if (error) return <div>failed to load</div>;
-    if (isLoading) return <div>loading...</div>;
+    if (isLoading) return <div className="flex flex-row justify-center items-center mb-4"><LoadingSVG /></div>;;
 
     return (
         <ul>
