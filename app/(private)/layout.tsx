@@ -16,21 +16,19 @@ export default function PrivateLayout({
     children: React.ReactNode;
 }) {
     return (
-        <MyThemeProvider>
-            <SWRConfig value={{ fetcher: fetcher }}>
-                <div className="flex flex-col min-h-screen max-w-md m-auto items-center justify-center">
-                    <div className="flex w-full justify-between items-center px-5">
-                        <DarkModeSwitch />
-                        <SearchBar />
-                    </div>
-                    <Header />
-                    <NavBar />
-                    <main className="w-full p-5 dark:bg-slate-800 bg-slate-300 rounded-lg my-2">
-                        {children}
-                    </main>
-                    <Footer />
+        <SWRConfig value={{ fetcher: fetcher }}>
+            <div className="flex flex-col min-h-screen max-w-md m-auto items-center justify-center">
+                <div className="flex w-full justify-between items-center px-5">
+                    <DarkModeSwitch />
+                    <SearchBar />
                 </div>
-            </SWRConfig>
-        </MyThemeProvider>
+                <Header />
+                <NavBar />
+                <main className="w-full p-5 dark:bg-slate-800 bg-slate-300 rounded-lg my-2">
+                    {children}
+                </main>
+                <Footer />
+            </div>
+        </SWRConfig>
     );
 }
