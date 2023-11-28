@@ -1,6 +1,7 @@
 "use client";
 import LoadingSVG from "@/app/components/LoadingSVG";
 import { set } from "lodash";
+import { revalidatePath } from "next/cache";
 import { useRouter } from "next/navigation";
 import React, { FormEvent, useState } from "react";
 
@@ -24,6 +25,7 @@ function Form() {
             setError("log in failed");
         }
         setLoading(false);
+        revalidatePath('/');
     }
 
     return (

@@ -1,34 +1,52 @@
-"use client";
-import { SWRConfig } from "swr";
-
 import Footer from "./footer";
 import Header from "./header";
 import NavBar from "./navbar";
-import fetcher from "../utils/fetcher";
 import SearchBar from "./SearchBar";
-import MyThemeProviders from "../utils/MyThemeProvider";
-import MyThemeProvider from "../utils/MyThemeProvider";
 import DarkModeSwitch from "../components/ThemeSwicher";
+import MySWRConfig from "../utils/MySWRConfig";
+import { getJWTPayload } from "../utils/auth";
+import { sql } from "@/db";
+import { get } from "lodash";
+import Link from "next/link";
+import SignInUp from "../components/SignInUp";
 
-export default function PrivateLayout({
+export default async function PrivateLayout({
     children,
 }: {
     children: React.ReactNode;
 }) {
+
+    async function getUserProfile() {
+        // get currently logged in user
+        const jwtPayload = await getJWTPayload();
+
+        if (!jwtPayload) return null;
+        // fetch user data
+        const res = await sql(
+            "select id, username, avatar from users where id = $1",
+            [jwtPayload.sub]
+        );
+        return res.rows[0];
+    }
+
+    const user = await getUserProfile();
+
     return (
-        <SWRConfig value={{ fetcher: fetcher }}>
+        <MySWRConfig>
             <div className="flex flex-col min-h-screen max-w-md m-auto items-center justify-center">
                 <div className="flex w-full justify-between items-center px-5">
                     <DarkModeSwitch />
                     <SearchBar />
+
                 </div>
-                <Header />
-                <NavBar />
+                {user && <Header />}
+                {user && <NavBar />}
+                {!user && <div className="flex w-full"> <SignInUp /></div>}
                 <main className="w-full p-5 dark:bg-slate-800 bg-slate-300 rounded-lg my-2">
                     {children}
                 </main>
                 <Footer />
             </div>
-        </SWRConfig>
+        </MySWRConfig>
     );
 }

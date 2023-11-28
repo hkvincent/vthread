@@ -1,3 +1,4 @@
+"use client";
 import * as _ from "lodash";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import User from "../components/User";

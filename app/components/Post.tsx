@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import MyImage from "./MyImage";
 import { useFormState, useFormStatus } from "react-dom";

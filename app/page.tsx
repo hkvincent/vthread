@@ -1,5 +1,6 @@
 import Link from "next/link";
 import DarkModeSwitch from "./components/ThemeSwicher";
+import SignInUp from "./components/SignInUp";
 
 export default function Home() {
   return (
@@ -9,20 +10,13 @@ export default function Home() {
         <div className="text-center my-4">
           <h1>Strings</h1>
         </div>
+        <SignInUp />
         <div>
           <Link
-            href="/signin"
+            href="/thread"
             className="dark:bg-slate-900 bg-slate-400 my-4 p-3 rounded-lg block"
           >
-            Sign In
-          </Link>
-        </div>
-        <div>
-          <Link
-            href="/signup"
-            className="dark:bg-slate-900 bg-slate-400 my-4 p-3 rounded-lg block"
-          >
-            Sign Up
+            Thread
           </Link>
         </div>
       </div>

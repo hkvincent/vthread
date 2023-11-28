@@ -1,4 +1,5 @@
 "use client";
+import { revalidatePath } from "next/cache";
 import React, { FormEvent, useEffect, useState } from "react";
 
 function Form() {
@@ -44,6 +45,7 @@ function Form() {
                 setErrors(["Sign up failed."]);
             }
         }
+        revalidatePath('/');
     }
 
     return (
