@@ -8,7 +8,7 @@ export default function SignOutButton() {
         const res = await fetch("/api/logout");
 
         if (res.ok) {
-            router.push("/signin");
+            router.push("/");
         }
     }
 

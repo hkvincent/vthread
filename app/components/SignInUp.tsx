@@ -7,7 +7,7 @@ const SignInUp = () => {
             <div>
                 <Link
                     href="/signin"
-                    className="dark:bg-slate-900 bg-slate-400 my-4 p-3 rounded-lg block"
+                    className="dark:bg-slate-900 bg-slate-400 p-3  rounded-lg block"
                 >
                     Sign In
                 </Link>
@@ -15,7 +15,7 @@ const SignInUp = () => {
             <div>
                 <Link
                     href="/signup"
-                    className="dark:bg-slate-900 bg-slate-400 my-4 p-3 rounded-lg block"
+                    className="dark:bg-slate-900 bg-slate-400 p-3 rounded-lg block"
                 >
                     Sign Up
                 </Link>

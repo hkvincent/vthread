@@ -9,7 +9,7 @@ export async function middleware(request: NextRequest) {
         pathname.startsWith("/api/posts"),
         pathname.startsWith("/api/follows"),
         pathname.startsWith("/api/admin"),
-        pathname.startsWith("/api/search"),
+        // pathname.startsWith("/api/search"),
     ];
 
     const authenticatedCronRoutes = [pathname.startsWith("/api/cron")];

@@ -23,7 +23,7 @@ function MyImage({ url }: { url: string }) {
                 />
             ) : (
                 // eslint-disable-next-line @next/next/no-img-element
-                <img
+                url && <img
                     src={url}
                     width={50}
                     height={50}

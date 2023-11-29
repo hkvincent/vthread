@@ -29,6 +29,13 @@ function Post({ post, showEditBtn }: { post: PostI; showEditBtn?: boolean }) {
         setState({ ...state, showConfirm: !state.showConfirm });
     }
 
+    if (typeof window === 'undefined') {
+        // This will run only on the server
+        console.log("Server: The Thread page's Post");
+      } else {
+        // This will run only on the client
+        console.log("Client: The Thread page's Post");
+      }
     return (
         <div className="flex flex-row">
             <div>

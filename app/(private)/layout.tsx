@@ -33,18 +33,17 @@ export default async function PrivateLayout({
 
     return (
         <MySWRConfig>
-            <div className="flex flex-col min-h-screen max-w-md m-auto items-center justify-center">
+            <div className="flex flex-col min-h-screen max-w-md m-auto items-center justify-center ">
                 <div className="flex w-full justify-between items-center px-5">
                     <DarkModeSwitch />
                     <SearchBar />
-
                 </div>
                 {user && <Header />}
                 {user && <NavBar />}
-                {!user && <div className="flex w-full"> <SignInUp /></div>}
                 <main className="w-full p-5 dark:bg-slate-800 bg-slate-300 rounded-lg my-2">
                     {children}
                 </main>
+                {!user && <div className=""><SignInUp /> </div>}
                 <Footer />
             </div>
         </MySWRConfig>
