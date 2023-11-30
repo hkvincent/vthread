@@ -36,8 +36,8 @@ function PostList({
 
 
     // if (error) return <div>failed to load</div>;
-    if (isLoading || !post) return <div className="flex flex-row justify-center items-center"><LoadingSVG /></div>;
-
+    if (isLoading) return <div className="flex flex-row justify-center items-center"><LoadingSVG /></div>;
+    if (!post || post.length === 0) return <div className="flex flex-row justify-center items-center">No Posts</div>
     return (
         <ul>
             {post.map((post: PostI) => {
