@@ -5,10 +5,18 @@ import MyThemeProvider from './utils/MyThemeProvider'
 
 const inter = Inter({ subsets: ['latin'] })
 
-export const metadata: Metadata = {
-  title: 'V Thread',
-  description: 'v socail community',
-}
+
+export const metadata = {
+  title: {
+    default: 'VThread',
+    template: '%s | VThread',
+  },
+  description: 'The new social Media.',
+  appleWebApp: {
+    title: "VThread",
+    statusBarStyle: "default",
+  },
+};
 
 export default function RootLayout({
   children,
@@ -18,6 +26,10 @@ export default function RootLayout({
   return (
 
     <html lang="en">
+      <head>
+        <link rel="manifest" href="/site.webmanifest"></link>
+        <script src="/serviceWorkerRegister.js" defer></script>
+      </head>
       <body className={inter.className}>
         <MyThemeProvider>
           {children}
