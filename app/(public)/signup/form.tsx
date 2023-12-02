@@ -45,7 +45,7 @@ function Form() {
                 setErrors(["Sign up failed."]);
             }
         }
-        revalidatePath('/');
+        // revalidatePath('/');
     }
 
     return (

@@ -6,7 +6,6 @@ import { NextResponse } from "next/server";
 export async function getJWTPayload() {
     const cookieStore = cookies();
     const token = cookieStore.get("jwt-token");
-    console.log({token});
     if (!token || !token.value) return "";
     const secret = new TextEncoder().encode(process.env.JWT_SECRET!);
     const { payload, protectedHeader } = await jwtVerify(token?.value!, secret);

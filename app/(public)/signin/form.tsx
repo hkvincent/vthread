@@ -25,7 +25,7 @@ function Form() {
             setError("log in failed");
         }
         setLoading(false);
-        revalidatePath('/');
+        // revalidatePath('/');
     }
 
     return (

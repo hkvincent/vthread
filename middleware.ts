@@ -14,6 +14,15 @@ export async function middleware(request: NextRequest) {
 
     const authenticatedCronRoutes = [pathname.startsWith("/api/cron")];
 
+    const routeToHomeIfLoggedIn = ["/","", "signin", "signup"];
+
+    if (routeToHomeIfLoggedIn.includes(pathname.replace("/", ""))) {
+        const cookie = request.cookies.get("jwt-token");
+        if (cookie && cookie?.value) {
+            return NextResponse.redirect(new URL('/feed', request.url));
+        }
+    }
+
     if (authenticatedAPIRoutes.includes(true)) {
         const cookie = request.cookies.get("jwt-token");
 

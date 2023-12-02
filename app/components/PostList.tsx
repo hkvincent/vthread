@@ -14,7 +14,6 @@ function PostList({
     showEditBtn?: boolean;
     numberOfPosts?: number;
 }) {
-    console.log("PostList" + numberOfPosts);
     const [post, setPost] = useState<PostI[]>([])
     const [isLoading, setIsLoading] = useState(true)
 

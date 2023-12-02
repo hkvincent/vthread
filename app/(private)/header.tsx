@@ -1,22 +1,14 @@
-"use client";
-import useSWR from "swr";
 import User from "../components/User";
-import LoadingSVG from "../components/LoadingSVG";
 
-
-export default function Header() {
-    const { data, error, isLoading } = useSWR("/api/users/profile");
-
-    if (error) return <div>failed to load</div>;
-    if (isLoading) return <LoadingSVG />;
-
+export default function Header({ user, avatar }: { user: UserI, avatar: string }) {
+    if (!user) return <div>failed to load</div>;
     return (
         <header className="flex flex-row w-full p-5 dark:bg-slate-800 bg-slate-300 rounded-lg my-2 justify-between items-center">
             <div>
                 <h1 className="font-mono text-lg">V-thread</h1>
             </div>
             <div>
-                <User user={data.data} href="account" />
+                <User user={user} href="account" />
             </div>
         </header>
     );

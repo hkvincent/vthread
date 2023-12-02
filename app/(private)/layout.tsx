@@ -6,8 +6,6 @@ import DarkModeSwitch from "../components/ThemeSwicher";
 import MySWRConfig from "../utils/MySWRConfig";
 import { getJWTPayload } from "../utils/auth";
 import { sql } from "@/db";
-import { get } from "lodash";
-import Link from "next/link";
 import SignInUp from "../components/SignInUp";
 
 export default async function PrivateLayout({
@@ -28,7 +26,6 @@ export default async function PrivateLayout({
         );
         return res.rows[0];
     }
-
     const user = await getUserProfile();
 
     return (
@@ -38,7 +35,7 @@ export default async function PrivateLayout({
                     <DarkModeSwitch />
                     <SearchBar />
                 </div>
-                {user && <Header />}
+                {user && <Header user={user} avatar={user.avatar} />}
                 {user && <NavBar />}
                 <main className="w-full p-5 dark:bg-slate-800 bg-slate-300 rounded-lg my-2">
                     {children}

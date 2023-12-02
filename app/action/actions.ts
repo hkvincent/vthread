@@ -34,7 +34,7 @@ export async function addPost(prevState: any, formData: FormData) {
 }
 
 export async function deletePost(id: number, prevState: any, formData: FormData) {
-    console.log(`deletePost ${id}`);
+    // console.log(`deletePost ${id}`);
     const jwtPayload = await getJWTPayload();
     const res = await sql("delete from posts where user_id = $1 and id = $2", [
         jwtPayload.sub,
@@ -49,7 +49,7 @@ export async function deletePost(id: number, prevState: any, formData: FormData)
 }
 
 export async function doFollow(prevState: any, formData: FormData) {
-    console.log("doFollow");
+    // console.log("doFollow");
     const jwtPayload = await getJWTPayload();
     const userId = formData.get('userId');
 
@@ -72,7 +72,7 @@ export async function doFollow(prevState: any, formData: FormData) {
 }
 
 export async function doUnfollow(prevState: any, formData: FormData) {
-    console.log("doUnfollow");
+    // console.log("doUnfollow");
     const jwtPayload = await getJWTPayload();
     const userId = formData.get('userId');
 
