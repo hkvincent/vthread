@@ -26,7 +26,9 @@ export default async function PrivateLayout({
         );
         return res.rows[0];
     }
+
     const user = await getUserProfile();
+    console.log("PrivateLayout" + { user });
 
     return (
         <MySWRConfig>

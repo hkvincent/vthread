@@ -40,6 +40,7 @@ export default function AvatarUploadPage() {
                             if (response.ok) {
                                 const newBlob = (await response.json()) as PutBlobResult;
                                 // revalidatePath("/account");
+                                router.refresh();
                                 router.push("/account");
                                 // setBlob(newBlob); // If you want to display the blob URL, uncomment this line.
                             } else {

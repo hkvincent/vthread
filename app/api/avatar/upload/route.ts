@@ -17,8 +17,9 @@ export async function POST(request: Request): Promise<NextResponse> {
         blob.url,
         jwtPayload.sub,
     ]);
-    revalidatePath('/account')
-    revalidatePath('/')
+    // revalidatePath('/account')
+    // revalidatePath('/')
+    // revalidatePath('/', 'layout')
     revalidatePath('/(private)', 'layout')
 
 
