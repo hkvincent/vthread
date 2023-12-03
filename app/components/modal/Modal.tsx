@@ -42,14 +42,15 @@ export default function Modal({ children }: { children: React.ReactNode }) {
     }, [onKeyDown])
 
     return (
-        <div
+         <div
             ref={overlay}
-            className="fixed z-10 left-0 right-0 top-0 bottom-0 mx-auto bg-black/60"
+            className="fixed z-10 inset-0 bg-black/60 flex items-center justify-center px-4"
             onClick={onClick}
         >
             <div
                 ref={wrapper}
-                className="absolute top-1/2 left-2/3 -translate-x-1/2 -translate-y-1/2 w-full sm:w-10/12 md:w-8/12 lg:w-1/2 p-6"
+                className="rounded-lg shadow-md m-2 p-6 max-w-sm w-full"
+                onClick={(e) => e.stopPropagation()} // Prevent click from propagating to the overlay
             >
                 {children}
             </div>
