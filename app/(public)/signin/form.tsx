@@ -11,7 +11,6 @@ function Form() {
     const [password, setPassword] = useState<undefined | string>("");
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string>("");
-
     const { modal, setModal } = useContext(ModalContext)!;
 
     async function handleSubmit(e: FormEvent) {
