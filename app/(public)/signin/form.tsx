@@ -1,9 +1,9 @@
 "use client";
 import LoadingSVG from "@/app/components/LoadingSVG";
+import ModalContext from "@/app/context/ModalContext";
 import { set } from "lodash";
-import { revalidatePath } from "next/cache";
 import { useRouter } from "next/navigation";
-import React, { FormEvent, useState } from "react";
+import React, { FormEvent, useContext, useState } from "react";
 
 function Form() {
     const router = useRouter();
@@ -12,6 +12,8 @@ function Form() {
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string>("");
 
+    const { modal, setModal } = useContext(ModalContext)!;
+
     async function handleSubmit(e: FormEvent) {
         setLoading(true);
         e.preventDefault();
@@ -19,12 +21,15 @@ function Form() {
             method: "POST",
             body: JSON.stringify({ username, password }),
         });
+        setLoading(false);
         if (res.ok) {
+            setModal({ shouldCloseModal: true });
+            router.refresh();
             router.push("/feed");
         } else {
             setError("log in failed");
         }
-        setLoading(false);
+
         // revalidatePath('/');
     }
 

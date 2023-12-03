@@ -1,5 +1,5 @@
 import DarkModeSwitch from "../components/ThemeSwicher";
-import MyThemeProvider from "../utils/MyThemeProvider";
+import MyThemeProvider from "../context/MyThemeProvider";
 
 export default function PublicLayout({
     children,

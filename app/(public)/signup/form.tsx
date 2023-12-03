@@ -1,15 +1,19 @@
 "use client";
-import { revalidatePath } from "next/cache";
-import React, { FormEvent, useEffect, useState } from "react";
+import LoadingSVG from "@/app/components/LoadingSVG";
+import ModalContext from "@/app/context/ModalContext";
+import { useRouter } from "next/navigation";
+import React, { FormEvent, useContext, useEffect, useState } from "react";
 
 function Form() {
+    const router = useRouter();
     const [username, setUsername] = useState<undefined | string>("");
     const [password, setPassword] = useState<undefined | string>("");
     const [confirmPassword, setConfirmPassword] = useState<undefined | string>(
         ""
     );
     const [errors, setErrors] = useState<string[]>([]);
-
+    const { modal, setModal } = useContext(ModalContext)!;
+    const [loading, setLoading] = useState<boolean>(false);
     useEffect(() => {
         return () => {
             setPassword("");
@@ -22,7 +26,7 @@ function Form() {
     async function handleSubmit(e: FormEvent) {
         e.preventDefault();
         setErrors([]);
-
+        setLoading(true);
         if (password != confirmPassword) {
             setErrors(prevErrors => [...prevErrors, "Passwords do not match."]);
             return;
@@ -32,7 +36,9 @@ function Form() {
             method: "POST",
             body: JSON.stringify({ username, password }),
         });
+        setLoading(false);
         if (res.ok) {
+            // setModal({ shouldCloseModal: true });
             window.location.href = "/signin";
         } else {
             const data = await res.json();
@@ -49,7 +55,7 @@ function Form() {
     }
 
     return (
-        <form
+        loading ? <LoadingSVG /> : <form
             onSubmit={handleSubmit}
             className="flex flex-col gap-2 p-5 max-w-xs w-full dark:bg-slate-800 bg-slate-300 rounded-lg"
         >

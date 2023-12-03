@@ -13,9 +13,11 @@ export default async function PublicFeed() {
     const posts = await getData();
     return (
         <main>
-            <h1>Strings</h1>
+            <div className="flex flex-row justify-between mb-8">
+                <p>VThread</p>
+                <p>Recent Posts</p>
+            </div>
             <div>
-                <h2>Recent Posts From the Community</h2>
                 {posts.map((post) => {
                     return <Post post={post} key={post.id} />;
                 })}

@@ -9,9 +9,10 @@ import { sql } from "@/db";
 import SignInUp from "../components/SignInUp";
 
 export default async function PrivateLayout({
-    children,
+    children, modal
 }: {
-    children: React.ReactNode;
+    children: React.ReactNode,
+    modal: React.ReactNode
 }) {
 
     async function getUserProfile() {
@@ -41,6 +42,7 @@ export default async function PrivateLayout({
                 {user && <NavBar />}
                 <main className="w-full p-5 dark:bg-slate-800 bg-slate-300 rounded-lg my-2">
                     {children}
+                    {modal}
                 </main>
                 {!user && <div className=""><SignInUp /> </div>}
                 <Footer />
