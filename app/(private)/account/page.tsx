@@ -1,6 +1,6 @@
 import { getJWTPayload } from "@/app/utils/auth";
 import AvatarForm from "./AvatarForm";
-import SignOutButton from "./SignoutBtn";
+import SignOutForm from "./SignoutForm";
 import { sql } from "@/db";
 import { redirect } from "next/navigation";
 
@@ -25,7 +25,7 @@ export default async function AccountPage() {
         <div>
             <h2>Account</h2>
             <AvatarForm user={user} />
-            <SignOutButton />
+            <SignOutForm />
         </div>
     );
 }

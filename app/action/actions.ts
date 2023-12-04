@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { getJWTPayload } from "../utils/auth";
 import { sql } from "@/db";
 import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
 
 export async function editPost(id: number, prevState: any, formData: FormData) {
     const jwtPayload = await getJWTPayload();
@@ -82,4 +83,13 @@ export async function doUnfollow(prevState: any, formData: FormData) {
     ]);
     revalidatePath('/')
     return { message: ' remove follow' };;
+}
+
+
+export async function doSignout(prevState: any, formData: FormData) {
+    // console.log("doUnfollow");
+    cookies().set("jwt-token", "");
+    revalidatePath('/')
+    redirect(`/`);
+    return { message: ' jwt clear' };;
 }
