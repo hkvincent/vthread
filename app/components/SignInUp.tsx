@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import React from 'react';
+import { Button } from "@/components/ui/button"
 
 const SignInUp = () => {
     return (
@@ -23,5 +24,21 @@ const SignInUp = () => {
         </div>
     );
 };
+
+
+export function SignInUpV0() {
+    return (
+        <div className="flex justify-center space-x-4">
+            <Button className="transition-colors duration-200 hover:bg-blue-700" variant="outline">
+                <Link href="/signin">Login</Link>
+            </Button>
+            <Button className="transition-colors duration-200 hover:bg-green-700" variant="outline">
+                <Link
+                    href="/signup"> Sign up</Link>
+            </Button>
+        </div>
+    )
+}
+
 
 export default SignInUp;

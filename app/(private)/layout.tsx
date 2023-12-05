@@ -6,7 +6,7 @@ import DarkModeSwitch from "../components/ThemeSwicher";
 import MySWRConfig from "../utils/MySWRConfig";
 import { getJWTPayload } from "../utils/auth";
 import { sql } from "@/db";
-import SignInUp from "../components/SignInUp";
+import SignInUp, { SignInUpV0 } from "../components/SignInUp";
 
 export default async function PrivateLayout({
     children, modal
@@ -44,7 +44,7 @@ export default async function PrivateLayout({
                     {children}
                     {modal}
                 </main>
-                {!user && <div className=""><SignInUp /> </div>}
+                {!user && <div className=""><SignInUpV0 /> </div>}
                 <Footer />
             </div>
         </MySWRConfig>
