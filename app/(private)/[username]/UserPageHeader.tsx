@@ -17,7 +17,7 @@ export default async function UserPageHeader({ username }: { username: string })
     async function getFollow(dataUser: any) {
         if (dataUser === undefined) return;
         const jwtPayload = await getJWTPayload();
-        // console.log({ jwtPayload });
+
         if (!jwtPayload) return null;
         const res = await sql(
             "select * from follows where user_id = $1 and follower_id = $2",

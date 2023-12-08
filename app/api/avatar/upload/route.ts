@@ -8,7 +8,7 @@ export async function POST(request: Request): Promise<NextResponse> {
     const jwtPayload = await getJWTPayload();
     const { searchParams } = new URL(request.url);
     const filename = searchParams.get("filename")!;
-    console.log("upload avatar");
+
     const blob = await put(filename, request.body!, {
         access: "public",
     });

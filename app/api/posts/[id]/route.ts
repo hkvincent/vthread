@@ -1,11 +1,12 @@
 import { getJWTPayload } from "@/app/utils/auth";
 import { sql } from "@/db";
 import { NextResponse } from "next/server";
-
+import { getToken } from "next-auth/jwt";
 export async function GET(
     request: Request,
     { params }: { params: { id: number } }
 ) {
+    
     const jwtPayload = await getJWTPayload();
     const res = await sql("select * from posts where id = $1 and user_id = $2", [
         params.id,

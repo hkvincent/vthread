@@ -5,6 +5,7 @@ import { getJWTPayload } from "../utils/auth";
 import { sql } from "@/db";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
+import { signOut } from "next-auth/react";
 
 export async function editPost(id: number, prevState: any, formData: FormData) {
     const jwtPayload = await getJWTPayload();
@@ -87,9 +88,9 @@ export async function doUnfollow(prevState: any, formData: FormData) {
 
 
 export async function doSignout(prevState: any, formData: FormData) {
-    // console.log("doUnfollow");
-    cookies().set("jwt-token", "");
-    revalidatePath('/')
-    redirect(`/`);
-    return { message: ' jwt clear' };;
+    // cookies().set("jwt-token", "");
+    // revalidatePath('/')
+    // redirect(`/`);
+    // return { message: ' jwt clear' };
+    signOut({ callbackUrl: "/" });
 }

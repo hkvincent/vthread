@@ -3,6 +3,8 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import MyThemeProvider from './context/MyThemeProvider'
 import ModalContext, { ModalProvider } from './context/ModalContext'
+import MySessionProvider from './context/MySessionProvider'
+import { Toaster } from 'react-hot-toast'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -34,7 +36,10 @@ export default function RootLayout({
       <body className={inter.className}>
         <MyThemeProvider>
           <ModalProvider>
-            {children}
+            <MySessionProvider>
+              {children}
+              <Toaster />
+            </MySessionProvider>
           </ModalProvider>
         </MyThemeProvider>
       </body>

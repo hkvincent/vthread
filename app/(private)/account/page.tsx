@@ -1,19 +1,19 @@
-import { getJWTPayload } from "@/app/utils/auth";
+import { authOptions, getJWTPayload } from "@/app/utils/auth";
 import AvatarForm from "./AvatarForm";
 import SignOutForm from "./SignoutForm";
 import { sql } from "@/db";
 import { redirect } from "next/navigation";
+import { getServerSession } from "next-auth/next"
 
 
 export default async function AccountPage() {
     async function getUserProfile() {
         // get currently logged in user
-        const jwtPayload = await getJWTPayload();
-        if (!jwtPayload) return  redirect(`/`);
+        const session = await getServerSession(authOptions)
         // fetch user data
         const res = await sql(
             "select id, username, avatar from users where id = $1",
-            [jwtPayload.sub]
+            [session.user.id]
         );
         return res.rows[0];
     }

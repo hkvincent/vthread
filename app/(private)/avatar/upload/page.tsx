@@ -6,6 +6,7 @@ import { upload } from "@vercel/blob/client";
 import { revalidatePath } from "next/cache";
 import { useRouter } from "next/navigation";
 import { useState, useRef } from "react";
+import { toast } from "react-hot-toast";
 
 export default function AvatarUploadPage() {
     const inputFileRef = useRef<HTMLInputElement>(null);
@@ -45,6 +46,7 @@ export default function AvatarUploadPage() {
                                 // setBlob(newBlob); // If you want to display the blob URL, uncomment this line.
                             } else {
                                 // Handle the error according to your needs.
+                                toast.error("An error occurred. Try again.");
                             }
                         }
                     }}

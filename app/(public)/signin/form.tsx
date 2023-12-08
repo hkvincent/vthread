@@ -2,9 +2,11 @@
 import LoadingSVG from "@/app/components/LoadingSVG";
 import ModalContext from "@/app/context/ModalContext";
 import { set } from "lodash";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import React, { FormEvent, useContext, useState } from "react";
-
+import { signIn } from "next-auth/react";
+import toast from "react-hot-toast";
+import { revalidatePath } from "next/cache";
 function Form() {
     const router = useRouter();
     const [username, setUsername] = useState<undefined | string>("");
@@ -12,25 +14,59 @@ function Form() {
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string>("");
     const { modal, setModal } = useContext(ModalContext)!;
+    const searchParams = useSearchParams();
+    const callbackUrl = "/feed";
+    // async function handleSubmit(e: FormEvent) {
+    //     setLoading(true);
+    //     e.preventDefault();
+    //     const res = await fetch("/api/login", {
+    //         method: "POST",
+    //         body: JSON.stringify({ username, password }),
+    //     });
+    //     setLoading(false);
+    //     if (res.ok) {
+    //         setModal({ shouldCloseModal: true });
+    //         router.refresh();
+    //         router.push("/feed");
+    //     } else {
+    //         setError("log in failed");
+    //     }
+
+    //     // revalidatePath('/');
+    // }
 
     async function handleSubmit(e: FormEvent) {
         setLoading(true);
         e.preventDefault();
-        const res = await fetch("/api/login", {
-            method: "POST",
-            body: JSON.stringify({ username, password }),
-        });
-        setLoading(false);
-        if (res.ok) {
-            setModal({ shouldCloseModal: true });
-            router.refresh();
-            router.push("/feed");
-        } else {
-            setError("log in failed");
+        try {
+            const result = await signIn("credentials", {
+                username,
+                password,
+                redirect: false,
+            });
+
+            if (result?.error) {
+                setLoading(false);
+                toast.error(result.error);
+            } else {
+
+                setLoading(false);
+                // setModal({ shouldCloseModal: true });
+                router.back();
+                // Wait for a moment to ensure the modal closes
+                setTimeout(() => {
+                    // Navigate to the '/feed' page
+                    router.push("/feed");
+                }, 500); // Adjust the timeout duration as needed
+            }
+        } catch (err) {
+            console.log(err);
+            setLoading(false);
+            toast.error("An error occurred. Try again.");
         }
 
-        // revalidatePath('/');
     }
+
 
     return (
         // loading true using loading svg

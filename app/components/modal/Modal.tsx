@@ -42,7 +42,7 @@ export default function Modal({ children }: { children: React.ReactNode }) {
     }, [onKeyDown])
 
     return (
-         <div
+        <div
             ref={overlay}
             className="fixed z-10 inset-0 bg-black/60 flex items-center justify-center px-4"
             onClick={onClick}

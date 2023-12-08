@@ -4,9 +4,10 @@ import NavBar from "./navbar";
 import SearchBar from "./SearchBar";
 import DarkModeSwitch from "../components/ThemeSwicher";
 import MySWRConfig from "../utils/MySWRConfig";
-import { getJWTPayload } from "../utils/auth";
+import { authOptions, getJWTPayload } from "../utils/auth";
 import { sql } from "@/db";
 import SignInUp, { SignInUpV0 } from "../components/SignInUp";
+import { getServerSession } from "next-auth/next"
 
 export default async function PrivateLayout({
     children, modal
@@ -17,20 +18,18 @@ export default async function PrivateLayout({
 
     async function getUserProfile() {
         // get currently logged in user
-        const jwtPayload = await getJWTPayload();
-
-        if (!jwtPayload) return null;
+        // const jwtPayload = await getJWTPayload();
+        const session = await getServerSession(authOptions)
+        if (!session) return null;
         // fetch user data
         const res = await sql(
             "select id, username, avatar from users where id = $1",
-            [jwtPayload.sub]
+            [session.user.id]
         );
         return res.rows[0];
     }
 
     const user = await getUserProfile();
-    console.log("PrivateLayout" + { user });
-
     return (
         <MySWRConfig>
             <div className="flex flex-col min-h-screen max-w-md m-auto items-center justify-center ">
