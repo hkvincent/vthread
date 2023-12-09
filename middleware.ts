@@ -77,10 +77,8 @@ export default withAuth(
 
 export const config = {
     matcher: ["/api/users/:path*",
-        "/api/posts/:path*",
         "/api/follows/:path*",
         "/api/admin/:path*",
-        "/api/search/:path*",
         "/api/cron/:path*",
         "/feed/:path*",
         "/account/:path*",
