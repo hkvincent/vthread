@@ -1,15 +1,14 @@
 import { getJWTPayload } from "@/app/utils/auth";
 import { sql } from "@/db";
-import { NextResponse } from "next/server";
-
-export async function GET(request: Request) {
+import { NextRequest, NextResponse } from "next/server";
+import { getToken } from "next-auth/jwt";
+export async function GET(req: NextRequest) {
     // get currently logged in user
-    const jwtPayload = await getJWTPayload();
-
+    const token = await getToken({ req });
     // fetch user data
     const res = await sql(
         "select id, username, avatar from users where id = $1",
-        [jwtPayload.sub]
+        [token?.id]
     );
     const user = res.rows[0];
     // return user data

@@ -18,7 +18,6 @@ export default async function PrivateLayout({
 
     async function getUserProfile() {
         // get currently logged in user
-        // const jwtPayload = await getJWTPayload();
         const session = await getServerSession(authOptions)
         if (!session) return null;
         // fetch user data
@@ -30,6 +29,14 @@ export default async function PrivateLayout({
     }
 
     const user = await getUserProfile();
+    const session = await getServerSession(authOptions)
+    // check user.avatar is not null and not undefined and not empty string, using the user.avater otherwise use the session.picture
+    if (user && user.avatar) {
+        user.avatar = user.avatar;
+    } else if (session && session.user && session.user.image) {
+        user.avatar = session.user.image;
+    } 
+
     return (
         <MySWRConfig>
             <div className="flex flex-col min-h-screen max-w-md m-auto items-center justify-center ">

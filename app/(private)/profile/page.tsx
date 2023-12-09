@@ -1,31 +1,31 @@
 import useSWR from "swr";
 import Form from "./Form";
 import PostContainer from "@/app/components/PostContainer";
-import { getJWTPayload } from "@/app/utils/auth";
+import { authOptions, getJWTPayload } from "@/app/utils/auth";
 import { sql } from "@/db";
-
+import { getServerSession } from "next-auth/next"
 export default async function Profile() {
 
     async function getPorfile() {
         // get currently logged in user
-        const jwtPayload = await getJWTPayload();
+        const session = await getServerSession(authOptions)
 
         // fetch user data
         return await (await sql(
             "select id, username, avatar from users where id = $1",
-            [jwtPayload.sub]
+            [session?.user.id]
         )).rows[0];;
     }
 
 
     async function getTotalProfile() {
         // get currently logged in user
-        const jwtPayload = await getJWTPayload();
+        const session = await getServerSession(authOptions)
 
         // fetch user data
         return await (await sql(
             "select count(*) from posts where user_id = $1",
-            [jwtPayload.sub]
+            [session?.user.id]
         )).rows[0];;
     }
     // const { data, error, isLoading } = useSWR("/api/users/profile");

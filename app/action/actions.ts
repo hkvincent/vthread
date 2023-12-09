@@ -1,35 +1,35 @@
 'use server'
 
 import { revalidatePath } from "next/cache";
-import { getJWTPayload } from "../utils/auth";
+import { authOptions, getJWTPayload } from "../utils/auth";
 import { sql } from "@/db";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import { signOut } from "next-auth/react";
+import { getServerSession } from "next-auth/next"
 
 export async function editPost(id: number, prevState: any, formData: FormData) {
-    const jwtPayload = await getJWTPayload();
+    const session = await getServerSession(authOptions)
     const res = await sql(
         "select * from posts where user_id = $1 and id = $2",
-        [jwtPayload.sub, id]
+        [session.user.id, id]
     );
     if (res.rowCount == 0) {
         return { message: 'not found' };
     }
     await sql(
         "update posts set content = $1 where user_id = $2 and id = $3",
-        [formData.get('post'), jwtPayload.sub, id]
+        [formData.get('post'), session.user.id, id]
     );
     revalidatePath('/profile');
-    return { message: 'update' };
-
+    redirect(`/profile`);
 }
 
 export async function addPost(prevState: any, formData: FormData) {
-    const jwtPayload = await getJWTPayload();
+    const session = await getServerSession(authOptions)
     const res = await sql(
         "insert into posts (user_id, content) values ($1, $2) returning *",
-        [jwtPayload.sub, formData.get('post')]
+        [session.user.id, formData.get('post')]
     );
     revalidatePath('/profile');
     return { message: 'add' };
@@ -37,9 +37,9 @@ export async function addPost(prevState: any, formData: FormData) {
 
 export async function deletePost(id: number, prevState: any, formData: FormData) {
     // console.log(`deletePost ${id}`);
-    const jwtPayload = await getJWTPayload();
+    const session = await getServerSession(authOptions)
     const res = await sql("delete from posts where user_id = $1 and id = $2", [
-        jwtPayload.sub,
+        session.user.id,
         id,
     ]);
     if (res.rowCount != 1) {
@@ -52,12 +52,12 @@ export async function deletePost(id: number, prevState: any, formData: FormData)
 
 export async function doFollow(prevState: any, formData: FormData) {
     // console.log("doFollow");
-    const jwtPayload = await getJWTPayload();
+    const session = await getServerSession(authOptions)
     const userId = formData.get('userId');
 
     const res = await sql(
         "select * from follows where user_id = $1 and follower_id = $2",
-        [userId, jwtPayload.sub]
+        [userId, session.user.id]
     );
 
     if (res.rowCount > 0) {
@@ -67,7 +67,7 @@ export async function doFollow(prevState: any, formData: FormData) {
 
     await sql("insert into follows (user_id, follower_id) values ($1, $2)", [
         userId,
-        jwtPayload.sub,
+        session.user.id,
     ]);
     revalidatePath('/')
     return { message: ' follow' };;
@@ -75,12 +75,12 @@ export async function doFollow(prevState: any, formData: FormData) {
 
 export async function doUnfollow(prevState: any, formData: FormData) {
     // console.log("doUnfollow");
-    const jwtPayload = await getJWTPayload();
+    const session = await getServerSession(authOptions)
     const userId = formData.get('userId');
 
     await sql("delete from follows where user_id = $1 and follower_id = $2", [
         userId,
-        jwtPayload.sub,
+        session.user.id
     ]);
     revalidatePath('/')
     return { message: ' remove follow' };;

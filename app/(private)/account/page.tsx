@@ -20,6 +20,12 @@ export default async function AccountPage() {
 
 
     const user = await getUserProfile();
+    const session = await getServerSession(authOptions);
+    if (user && user.avatar) {
+        user.avatar = user.avatar;
+    } else if (session && session.user && session.user.image) {
+        user.avatar = session.user.image;
+    }
     if (!user) return null;
     return (
         <div>

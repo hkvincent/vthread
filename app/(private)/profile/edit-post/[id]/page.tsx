@@ -1,17 +1,19 @@
-import { getJWTPayload } from "@/app/utils/auth";
+import { authOptions, getJWTPayload } from "@/app/utils/auth";
 import Form from "./form";
 import { sql } from "@/db";
 import DeleteBtn from "./DeleteBtn";
+import { getServerSession } from "next-auth/next"
 // import DeleteBtn from "./delete-btn";
 
 export default async function EditPost({ params }: { params: { id: number } }) {
 
 
     async function getParticalPost(id: number) {
-        const jwtPayload = await getJWTPayload();
+        const session = await getServerSession(authOptions)
+        // const jwtPayload = await getJWTPayload();
         const res = await sql("select * from posts where id = $1 and user_id = $2", [
             params.id,
-            jwtPayload.sub,
+            session.user.id,
         ]);
 
         if (res.rowCount == 0) {

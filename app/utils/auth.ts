@@ -44,7 +44,7 @@ export const authOptions = {
             async authorize(credentials, req) {
                 const { username, password } = credentials!;
                 const res = await sql(
-                    "select id, username, password from users where username like $1",
+                    "select * from users where username like $1",
                     [username]
                 );
                 if (res.rowCount == 0) {
@@ -62,7 +62,6 @@ export const authOptions = {
                 if (!isPasswordMatched) {
                     throw new Error("Invalid email or password");
                 }
-
                 return user;
             },
         }),
@@ -71,30 +70,42 @@ export const authOptions = {
         // save user if they login via social networks
         async signIn({ account, user }: { account: any, user: any }) {
             if (account.provider === "google") {
-                const { name, id, email } = user;
+                const { name, id, email, image } = user;
+                console.log("signIn callback", user);
                 const res = await sql(
-                    "select id, username, email from users where username like $1",
+                    "select id, username, email from users where email = $1",
                     [email]
                 );
                 if (res.rowCount == 0) {
-                    await sql("insert into users (username,email) values ($1,$2)", [
-                        name, email
+                    await sql("insert into users (username,email,avatar) values ($1,$2,$3)", [
+                        name, email, image
                     ]);
                 }
             }
             return true;
         },
         // add additiona user info to the session (jwt, session)
-        jwt: async ({ token, user }: { token: any, user: any }) => {
-            // console.log("jwt callback", token, user);
-            const res = await sql(
-                "select id, username, email from users where id = $1",
-                [token.sub]
-            );
-            if (res.rowCount > 0) {
-                const user = res.rows[0];
-                user.password = undefined;
-                token.user = user;
+        jwt: async ({ token, account }: { token: any, account: any }) => {
+            if (account) {
+                let res;
+                console.log("jwt callback", token, account);
+                if (account.provider === "google") {
+                    res = await sql(
+                        "select id, username, email from users where email = $1",
+                        [token.email]
+                    );
+                } else {
+                    res = await sql(
+                        "select id, username, email from users where id = $1",
+                        [token.sub]
+                    );
+                }
+                if (res?.rowCount > 0) {
+                    const user = res.rows[0];
+                    user.password = undefined;
+                    token.user = user;
+                    token.id = user.id;
+                }
             }
 
             return token;
