@@ -57,7 +57,7 @@ export async function doFollow(prevState: any, formData: FormData) {
 
     const res = await sql(
         "select * from follows where user_id = $1 and follower_id = $2",
-        [userId, session.user.id]
+        [userId, session.id]
     );
 
     if (res.rowCount > 0) {
