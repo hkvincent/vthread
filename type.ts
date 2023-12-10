@@ -10,4 +10,5 @@ interface PostI {
     created_at: string;
     username: string;
     avatar: string;
+    user_id: number;
 }

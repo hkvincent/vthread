@@ -53,7 +53,7 @@ function Post({ post, showEditBtn }: { post: PostI; showEditBtn?: boolean }) {
             </div>
             <div className="flex flex-col max-w-xs">
                 <div className="font-bold">
-                    <Link href={`/${post.username}`}>{post.username}</Link>
+                    <Link href={`/${post.user_id}`}>{post.username}</Link>
                 </div>
                 <div className="dark:text-slate-400 text-slate-600">
                     {createdAt.toLocaleDateString("en-us", options)}

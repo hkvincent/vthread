@@ -44,7 +44,7 @@ export default async function PrivateLayout({
                     <DarkModeSwitch />
                     <SearchBar />
                 </div>
-                {user && <Header user={user} avatar={user.avatar} />}
+                <Header user={user} avatar={user.avatar} />
                 {user && <NavBar />}
                 <main className="w-full p-5 dark:bg-slate-800 bg-slate-300 rounded-lg my-2">
                     {children}
