@@ -10,7 +10,7 @@ export default function Header({ user, avatar }: { user: UserI, avatar: string }
                 </h1>
             </div>
             <div>
-                <User user={user} href="account" />
+                {user && <User user={user} href="account" />}
             </div>
         </header>
     );
