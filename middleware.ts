@@ -1,6 +1,7 @@
 import { jwtVerify } from "jose";
 import { NextRequest, NextResponse } from "next/server";
 import { withAuth } from "next-auth/middleware";
+import { redirect } from "next/dist/server/api-utils";
 
 
 // export async function middleware(request: NextRequest) {
@@ -55,7 +56,7 @@ import { withAuth } from "next-auth/middleware";
 export default withAuth(
     async function middleware(req) {
         const url = req.nextUrl.pathname;
-        const userRole = req?.nextauth?.token;
+        const token = req?.nextauth?.token;
         // cors
         // if (url?.includes("/api")) {
         //     NextResponse.next().headers.append("Access-Control-Allow-Origin", "*");
@@ -63,12 +64,17 @@ export default withAuth(
 
         // if (url?.includes("/admin") && userRole !== "admin") {
         //     return NextResponse.redirect(new URL("/", req.url));
-        // }
+        // }'
+        const routeToHomeIfLoggedIn = ["signin", "signup"];
+        console.log({ url, token });
+        if (token && routeToHomeIfLoggedIn.includes(url.replace("/", ""))) {
+            return NextResponse.redirect(new URL("/", req.url));
+        }
     },
     {
         callbacks: {
             authorized: ({ token, req }) => {
-                console.log({token});
+                console.log({ token });
                 return !!token; // Ensure to return a boolean value
             },
         },
@@ -84,5 +90,7 @@ export const config = {
         "/account/:path*",
         "/followers/:path*",
         "/following/:path*",
-        "/profile/:path*"]
+        "/profile/:path*",
+        "/signin/:path*",
+        "/signup/:path*",]
 };
