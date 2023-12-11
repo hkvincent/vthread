@@ -74,6 +74,10 @@ export default withAuth(
     {
         callbacks: {
             authorized: ({ token, req }) => {
+                const routeToHomeIfLoggedIn = ["signin", "signup"];
+                if (routeToHomeIfLoggedIn.includes(req.nextUrl.pathname.replace("/", ""))) {
+                    return true;
+                }
                 console.log({ token });
                 return !!token; // Ensure to return a boolean value
             },
