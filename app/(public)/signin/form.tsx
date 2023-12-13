@@ -56,8 +56,9 @@ function Form() {
                 // Wait for a moment to ensure the modal closes
                 setTimeout(() => {
                     // Navigate to the '/feed' page
+                    router.refresh();
                     router.push("/feed");
-                }, 500); // Adjust the timeout duration as needed
+                }, 200); // Adjust the timeout duration as needed
             }
         } catch (err) {
             console.log(err);

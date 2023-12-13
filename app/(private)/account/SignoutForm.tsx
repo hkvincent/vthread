@@ -15,9 +15,7 @@ export default function SignOutForm() {
     async function handleSignOut() {
         setOutLoading(true)
         signOut({ callbackUrl: "/" });
-        setOutLoading(false)
     }
-
     return (
         // <form action={formAction}>
         //     <SubmitButton />

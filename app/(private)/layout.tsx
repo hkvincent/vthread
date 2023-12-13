@@ -36,7 +36,6 @@ export default async function PrivateLayout({
     } else if (session && session.user && session.user.image) {
         user.avatar = session.user.image;
     } 
-
     return (
         <MySWRConfig>
             <div className="flex flex-col min-h-screen max-w-md m-auto items-center justify-center ">
