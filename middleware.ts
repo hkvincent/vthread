@@ -66,7 +66,6 @@ export default withAuth(
         //     return NextResponse.redirect(new URL("/", req.url));
         // }'
         const routeToHomeIfLoggedIn = ["signin", "signup"];
-        console.log({ url, token });
         if (token && routeToHomeIfLoggedIn.includes(url.replace("/", ""))) {
             return NextResponse.redirect(new URL("/", req.url));
         }
