@@ -37,62 +37,65 @@ function Post({ post, showEditBtn }: { post: PostI; showEditBtn?: boolean }) {
     //     console.log("Client: The Thread page's Post");
     //   }
     return (
-        <div className="flex flex-row">
-            <div>
-                {post.avatar && (
-                    <Link href={`/${post.username}`}>
-                        <MyImage url={post.avatar} />
-                    </Link>
-                )}
-                {!post.avatar && (
-                    <div
-                        className="bg-slate-600 rounded-full mr-3"
-                        style={{ width: 50, height: 50 }}
-                    ></div>
-                )}
-            </div>
-            <div className="flex flex-col max-w-xs">
-                <div className="font-bold">
-                    <Link href={`/${post.user_id}`}>{post.username}</Link>
-                </div>
-                <div className="dark:text-slate-400 text-slate-600">
-                    {createdAt.toLocaleDateString("en-us", options)}
-                </div>
-                <div>{post.content}</div>
-            </div>
-            {showEditBtn && (
-                <div className="flex flex-col justify-start items-end flex-grow">
-                    <button className="dark:bg-slate-900 bg-blue-400 p-2 rounded-lg mb-1">
-                        <Link
-                            href={`/profile/edit-post/${post.id}`}
-                            className="dark:text-green-400 text-green-800"
-                        >
-                            Edit
+        <>
+            <div className="flex flex-row bg-white dark:bg-slate-800 mb-2 p-3 rounded-lg">
+                <div>
+                    {post.avatar && (
+                        <Link href={`/${post.username}`}>
+                            <MyImage url={post.avatar} />
                         </Link>
-                    </button>
-
-                    {!state.showConfirm && (
-                        <button className="mt-1 dark:bg-slate-900 bg-red-400 p-2 rounded-lg" onClick={handleClick}>
-                            Delete
-                        </button>
                     )}
-
-                    {state.showConfirm && (<form className="mt-1" action={formAction}>
-                        <div>
-                            <p>SURE?</p>
-                            <div className="flex flex-row gap-2">
-                                <SubmitButton />
-                                <button className="dark:bg-slate-900 bg-slate-400 p-2 rounded-lg" onClick={handleClick}>
-                                    No
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+                    {!post.avatar && (
+                        <div
+                            className="bg-slate-600 rounded-full mr-3"
+                            style={{ width: 50, height: 50 }}
+                        ></div>
                     )}
                 </div>
-            )}
-        </div>
+                <div className="flex flex-col max-w-xs">
+                    <div className="font-bold">
+                        <Link href={`/${post.user_id}`}>{post.username}</Link>
+                    </div>
+                    <div className="dark:text-slate-400 text-slate-600">
+                        {createdAt.toLocaleDateString("en-us", options)}
+                    </div>
+                    <div>{post.content}</div>
+                </div>
+                {showEditBtn && (
+                    <div className="flex flex-col justify-start items-end flex-grow">
+                        <button className="dark:bg-slate-900 bg-blue-400 p-2 rounded-lg mb-1">
+                            <Link
+                                href={`/profile/edit-post/${post.id}`}
+                                className="dark:text-green-400 text-green-800"
+                            >
+                                Edit
+                            </Link>
+                        </button>
+
+                        {!state.showConfirm && (
+                            <button className="mt-1 dark:bg-slate-900 bg-red-400 p-2 rounded-lg" onClick={handleClick}>
+                                Delete
+                            </button>
+                        )}
+
+                        {state.showConfirm &&
+                            (<form className="mt-1" action={formAction}>
+                                <div>
+                                    <div className="flex flex-row gap-2">
+                                        <SubmitButton />
+                                        <button className="dark:bg-slate-900 bg-slate-400 p-2 rounded-lg" onClick={handleClick}>
+                                            No
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>)}
+                    </div>
+                )}
+            </div>
+            <hr className="border-t border-gray-200 dark:border-gray-600" />
+        </>
     );
+
 }
 
 

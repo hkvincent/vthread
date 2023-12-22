@@ -35,7 +35,7 @@ export default async function EditPost({ params }: { params: { id: number } }) {
     return (
         <div>
             <h2>Edit Post</h2>
-            <div className="flex flex-col gap-10">
+            <div className="flex flex-col gap-4">
                 <Form post={data} />
                 <DeleteBtn post={data} />
             </div>
