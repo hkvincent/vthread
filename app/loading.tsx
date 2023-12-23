@@ -2,29 +2,34 @@ import React from 'react';
 
 function Loading() {
     return (
-        <div className="flex justify-center items-center h-screen w-screen">
-            <svg
-                className="animate-spin h-36 w-36 text-blue-500"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-            >
-                <circle
-                    className="opacity-25"
-                    cx="12"
-                    cy="12"
-                    r="10"
-                    stroke="currentColor"
-                    strokeWidth="4"
-                ></circle>
-                <path
-                    className="opacity-75"
-                    fill="currentColor"
-                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 1.37.259 2.678.741 3.824l1.505-1.533z"
-                ></path>
-            </svg>
+        <div className="flex flex-col space-y-6 animate-pulse">
+            {/* Header Skeleton */}
+            <div className="h-12 bg-gray-300 dark:bg-gray-600 rounded-md w-full"></div>
+            
+            {/* Search Bar Skeleton */}
+            <div className="h-10 bg-gray-300 dark:bg-gray-600 rounded-md w-3/4 self-center"></div>
+            
+            {/* Nav Bar Skeleton */}
+            <div className="flex justify-around">
+                {Array.from({ length: 4 }).map((_, index) => (
+                    <div key={index} className="h-10 bg-gray-300 dark:bg-gray-600 rounded-md w-1/5"></div>
+                ))}
+            </div>
+            
+            {/* Posts Skeleton */}
+            <div className="space-y-4 w-full md:w-8/12 lg:w-6/12 self-center">
+                {Array.from({ length: 5 }).map((_, index) => (
+                    <div key={index} className="flex items-center space-x-4 p-4 bg-gray-300 dark:bg-gray-600 rounded-md">
+                        <div className="rounded-full bg-gray-400 h-10 w-10"></div>
+                        <div className="flex-1 space-y-3">
+                            <div className="w-3/4 h-2 bg-gray-400 rounded"></div>
+                            <div className="w-1/2 h-2 bg-gray-400 rounded"></div>
+                        </div>
+                    </div>
+                ))}
+            </div>
         </div>
-    )
+    );
 }
 
 export default Loading;
