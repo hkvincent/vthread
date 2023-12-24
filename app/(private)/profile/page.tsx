@@ -1,5 +1,5 @@
 import useSWR from "swr";
-import Form from "./Form";
+import Form from "./AddPostForm";
 import PostContainer from "@/app/components/PostContainer";
 import { authOptions, getJWTPayload } from "@/app/utils/auth";
 import { sql } from "@/db";

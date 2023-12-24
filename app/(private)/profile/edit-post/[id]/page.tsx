@@ -1,5 +1,5 @@
 import { authOptions, getJWTPayload } from "@/app/utils/auth";
-import Form from "./form";
+import Form from "./UpdatePostForm";
 import { sql } from "@/db";
 import DeleteBtn from "./DeleteBtn";
 import { getServerSession } from "next-auth/next"
