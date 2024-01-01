@@ -5,7 +5,7 @@ import { NextResponse } from "next/server";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import bcrypt from "bcrypt";
-import NextAuth, { SessionStrategy } from "next-auth";
+import NextAuth, { SessionStrategy, getServerSession } from "next-auth";
 export async function getJWTPayload() {
     const cookieStore = cookies();
     const token = cookieStore.get("jwt-token");
@@ -16,9 +16,10 @@ export async function getJWTPayload() {
 }
 
 export async function authorizeAdmin(func: Function) {
-    const jwtPayload = await getJWTPayload();
+    // const jwtPayload = await getJWTPayload();
+    const session = await getServerSession(authOptions)
     const res = await sql("select is_admin from users where id = $1", [
-        jwtPayload.sub,
+        session.user.id,
     ]);
     const data = res.rows[0];
     if (!data.is_admin) {
