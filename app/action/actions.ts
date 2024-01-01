@@ -18,7 +18,7 @@ export async function editPost(id: number, prevState: any, formData: FormData) {
         return { message: 'not found' };
     }
     await sql(
-        "update posts set content = $1 where user_id = $2 and id = $3",
+        "UPDATE posts SET content = $1, updated_at = NOW() WHERE user_id = $2 AND id = $3",
         [formData.get('post'), session.user.id, id]
     );
     revalidatePath('/profile');

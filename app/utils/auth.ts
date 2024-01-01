@@ -13,7 +13,7 @@ export async function getJWTPayload() {
     const secret = new TextEncoder().encode(process.env.JWT_SECRET!);
     const { payload, protectedHeader } = await jwtVerify(token?.value!, secret);
     return payload;
-}
+}``
 
 export async function authorizeAdmin(func: Function) {
     // const jwtPayload = await getJWTPayload();
