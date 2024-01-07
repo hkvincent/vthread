@@ -32,7 +32,9 @@
     "swr": "^2.2.0",
     "react-hot-toast": "^2.4.1",
     "tailwind-merge": "^2.1.0",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "@nextui-org/react": "^2.2.9",
+    "framer-motion": "^10.16.4"
   },
   "devDependencies": {
     "@faker-js/faker": "^8.0.2",

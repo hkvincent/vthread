@@ -1,3 +1,4 @@
+import CommentCreateForm from "@/app/components/CommentCreateForm";
 import Post from "@/app/components/Post";
 import { sql } from "@/db";
 import { toInteger } from "lodash";
@@ -17,8 +18,10 @@ export default async function postPage({ params }: { params: { id: string } }) {
     }
     const data: PostI = await getParticalPost(toInteger(params.id));
     console.log(data);
-    return (<div>
+    return (<>
         <Post post={data} />
-        <div className="flex flex-row justify-between mb-8">comment section</div>
-    </div>)
+        <div className="mt-2">
+            <CommentCreateForm postId={params.id} />
+        </div>
+    </>)
 }
